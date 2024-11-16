@@ -1,30 +1,32 @@
 import matplotlib.pyplot as plt
 import pandas as pd
 
+#-------------- Stage 1 --------------
 # Opening and reading CSV data file
-
 inputFile = open('B104_Data_Sheet_v2.csv')
 df = pd.read_csv('B104_Data_Sheet_v2.csv')
 
-# Renaming dataframe columns to their corresponding questions
+#-------------- Stage 2 --------------
+# Changing the names of dataframe with corresponding colums
 
 df.rename(columns= {'q1':'Age', 'q2':'Sex', 'q3':'Grade', 'q4':'Hispanic', 'q5':'Race', 'q6':'Height', 'q7':'Weight', 'q84':'badMentalHealth', 'q85': 'hoursOfSleep'}, inplace=True) 
 
-# Replacing int values for the dataframe column "Sex" with strings meant to convey meaning
-
+#Changing the dataframe column "Sex" int values to strings that have significance
 df['Sex'].replace([1.0, 2.0], ['Female','Male'], inplace = True)
 
-# Replacing int values for the dataframe column "badMentalHealth" with strings meant to convey meaning
+#Changing the dataframe column "badMentalHealth" int values to strings that have significance
 
 df['badMentalHealth'].replace([1.0, 2.0, 3.0, 4.0, 5.0], ['Never', 'Rarely', 'Sometimes', 'Mostly', 'Always'], inplace = True)
 
-# Replacing int values for the dataframe column "hoursOfSleep" with strings meant to convey meaning
+#Changing the dataframe column "hoursOfSleep" int values to strings that have significance
 
 df['hoursOfSleep'].replace([1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0], ['4 hrs or less', '5 hrs', '6 hrs', '7 hrs', '8 hrs', '9 hrs', '10 hrs or more'], inplace = True)
 
+#-------------- Stage 3 --------------
 # Get rid of word "count" on plot. 
 # Pie charts merge over each other, don't display separately. Idk why
-
+#-------------------------------------
+#Generates a pie chart with data taken from CSV file. 
 def getSleepPie():
     df['hoursOfSleep'] = df['hoursOfSleep'].replace(['4 hrs or less', '5 hrs', '6 hrs', '7 hrs', '9 hrs', '10 hrs or more'],"Not 8 hrs")
     df['hoursOfSleep'].value_counts(dropna=False).plot(kind="pie")
@@ -36,6 +38,8 @@ def getMentalHealthPie():
     plt.show()
     # df['badMentalHealth'].value_counts(dropna=False).plot(kind="pie")
 
+#-------------- Stage 4 --------------
+#Prints input data of Stage 3 and displays needed charts 
 getSleepPie()
 getMentalHealthPie()
 
