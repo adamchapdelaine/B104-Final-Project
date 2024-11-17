@@ -1,3 +1,4 @@
+import seaborn as sns
 import matplotlib.pyplot as plt
 import pandas as pd
 
@@ -12,7 +13,11 @@ df = pd.read_csv('B104_Data_Sheet_v2.csv')
 df.rename(columns= {'q1':'Age', 'q2':'Sex', 'q3':'Grade', 'q4':'Hispanic', 'q5':'Race', 'q6':'Height', 'q7':'Weight', 'q84':'badMentalHealth', 'q85': 'hoursOfSleep'}, inplace=True) 
 
 #Changing the dataframe column "Sex" int values to strings that have significance
-df['Sex'].replace([1.0, 2.0], ['Female','Male'], inplace = True)
+df['Sex'].replace([1.0, 2.0], ['Female', 'Male'], inplace = True)
+
+# Changing
+df['Grade'].replace([1.0, 2.0, 3.0, 4.0, 5.0], ['9th Grade', '10th Grade', '11th Grade', '12th Grade', 'Other'], inplace = True)
+
 
 #Changing the dataframe column "badMentalHealth" int values to strings that have significance
 
@@ -26,23 +31,71 @@ df['hoursOfSleep'].replace([1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0], ['4 hrs or less'
 # Get rid of word "count" on plot. 
 # Pie charts merge over each other, don't display separately. Idk why
 #-------------------------------------
-#Generates a pie chart with data taken from CSV file. 
+#Generates a pie chart with data taken from CSV file.
 def getSleepPie():
-    df['hoursOfSleep'] = df['hoursOfSleep'].replace(['4 hrs or less', '5 hrs', '6 hrs', '7 hrs', '9 hrs', '10 hrs or more'],"Not 8 hrs")
-    df['hoursOfSleep'].value_counts(dropna=False).plot(kind="pie")
+    df2 = df['hoursOfSleep']
+    df2 = df2.replace(['4 hrs or less', '5 hrs', '6 hrs', '7 hrs', '9 hrs', '10 hrs or more'],"Not 8 hrs")
+    
+    plt.figure(figsize=(8, 8))
+    valueCounts1 = df2.value_counts()
+    df2.value_counts().plot(kind='pie', subplots=True, figsize=(8, 8))
+    valueCounts1.plot.pie(autopct='%1.1f%%')
+    plt.title('Category 1 Distribution')
+    plt.ylabel('')
+    plt.show()
 
 def getMentalHealthPie():
-    df['badMentalHealth'] = df['badMentalHealth'].replace(['Never'],"Does not experience bad mental health")
-    df['badMentalHealth'] = df['badMentalHealth'].replace(['Never', 'Rarely', 'Sometimes', 'Mostly', 'Always'],"Experiences bad mental health")
-    plt.pie(df['badMentalHealth'])
+    df3 = df['badMentalHealth']
+    df3 = df3.replace(['Never'],'Never experiences bad mental health')
+    df3 = df3.replace(['Never', 'Rarely', 'Sometimes', 'Mostly', 'Always'],'Experiences bad mental health')
+    
+    plt.figure(figsize=(8, 8))
+    valueCounts2 = df3.value_counts()
+    df3.value_counts().plot(kind='pie', subplots=True, figsize=(8, 8))
+    valueCounts2.plot.pie(autopct='%1.1f%%')
+    plt.title('Category 2 Distribution')
+    plt.ylabel('')
     plt.show()
-    # df['badMentalHealth'].value_counts(dropna=False).plot(kind="pie")
+    
+def getBarChart():
+    df4 = df[['badMentalHealth', 'Grade']]
+    
+    df4 = df4.replace(['Sometimes', 'Mostly', 'Always'],'Experiences bad mental health')
+    
+    # Drop value 'Other' from grades
+    df4 = df4.drop(df4[df4['Grade'] == 'Other'].index)
+    
+    # Calculate minimum count for balancing before filtering
+    minCount = df4['Grade'].value_counts().min()
+    
+    # Create proportional sample
+    balancedSample = df4.groupby('Grade').apply(lambda x: x.sample(minCount, random_state=42)).reset_index(drop=True)
+    
+    # Filter for bad mental health experiences after balancing
+    filteredDf = balancedSample[balancedSample['badMentalHealth'] == 'Experiences bad mental health']
+    
+    # Grouping "badMentalHealth" to "Grade" for plotting student responses from each grade level
+    groupedData = filteredDf['Grade'].value_counts().reset_index(name='count').rename(columns={'index': 'Grade'})
+    
+    # Plotting the data
+    sns.barplot(x='Grade', y='count', data=groupedData, order=['9th Grade', '10th Grade', '11th Grade', '12th Grade'])
+    plt.xlabel('Grade')
+    plt.ylabel('Count of Students')
+    plt.title('Bad Mental Health by Grade (Sometimes or Greater)')
+    plt.show()
+    
+    # Print counts
+    grouped_counts = filteredDf['Grade'].value_counts()
+    print(grouped_counts)
+    print(minCount)
+    
+    # df['badMentalHealth'].value_counts(dropna=False).plot(kind="pie"))
 
 #-------------- Stage 4 --------------
 #Prints input data of Stage 3 and displays needed charts 
 getSleepPie()
 getMentalHealthPie()
-
+getBarChart()
 
 print(df)
 
