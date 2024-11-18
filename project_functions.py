@@ -27,10 +27,7 @@ df.rename(columns= {'q1':'Age', 'q2':'Sex', 'q3':'Grade', 'q4':'Hispanic', 'q5':
 
 # df['Sleep Duration'].replace([1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0], ['≤ 4 hrs', '5 hrs', '6 hrs', '7 hrs', '8 hrs', '9 hrs', '≥ 10 hrs'], inplace = True)
 
-#-------------- Stage 3 --------------
-# Get rid of word "count" on plot. 
-# Pie charts merge over each other, don't display separately. Idk why
-#-------------------------------------
+
 #Generates a pie chart with data taken from CSV file.
 def getSleepPie():
     dfAltered = df.copy()
@@ -175,14 +172,8 @@ def getHeatMap():
     plt.show
     
     # Note: Sex displays as negative correlation, could be reversed to positive, both are valid. Revisit later.
-
-
-
-
-
-
-#-------------- Stage 4 --------------
-#Prints input data of Stage 3 and displays needed charts 
+#-------------- Stage 3 --------------
+#Prints input data of Stage 2 and displays needed charts 
 getSleepPie()
 getMentalHealthPie()
 # getBarChart()
