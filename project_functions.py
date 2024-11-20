@@ -29,40 +29,49 @@ df.rename(columns= {'q1':'Age', 'q2':'Sex', 'q3':'Grade', 'q4':'Hispanic', 'q5':
 
 
 #Generates a pie chart with data taken from CSV file.
-def getSleepPie():
+def getPieCharts(): 
+    # setting up data
+    
+    # 1st pie chart data
     dfAltered = df.copy()
     dfAltered['Sleep Duration'].replace([1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0], ['≤ 4 hrs', '5 hrs', '6 hrs', '7 hrs', '8 hrs', '9 hrs', '≥ 10 hrs'], inplace = True)
     df2 = dfAltered['Sleep Duration']
     df2 = df2.replace(['≤ 4 hrs', '5 hrs', '6 hrs', '7 hrs'],"Less than 8 hrs")
     df2 = df2.replace(['9 hrs', '≥ 10 hrs'],"More than 8 hrs")
     
-    
-    plt.figure(figsize=(8, 8))
-    valueCounts1 = df2.value_counts()
-    df2.value_counts().plot(kind='pie', subplots=True, figsize=(8, 8))
-    valueCounts1.plot.pie(autopct='%1.1f%%')
-    colors = sns.color_palette("crest")  # Define the color palette lines 44-45
-    valueCounts1.plot.pie(autopct='%1.1f%%',colors=colors)
-    plt.title('Category 1 Distribution')
-    plt.ylabel('')
-    plt.show()
-
-def getMentalHealthPie():
-    dfAltered = df.copy()
+    # 2nd pie chart data
     dfAltered['Bad Mental Health'].replace([1.0, 2.0, 3.0, 4.0, 5.0], ['Never', 'Rarely', 'Sometimes', 'Mostly', 'Always'], inplace = True)
     df3 = dfAltered['Bad Mental Health']
     df3 = df3.replace(['Never', 'Rarely'],'Rarely or never experiences bad mental health')
     df3 = df3.replace(['Sometimes', 'Mostly', 'Always'],'Experiences bad mental health')
     
-    plt.figure(figsize=(8, 8))
+    # Establishing figure 
+    fig, axs = plt.subplots(1, 2, figsize=(12, 9)) 
+       
+    # Creating Pie Chart 1
+    
+    valueCounts1 = df2.value_counts()
+    axs[0].pie(valueCounts1, colors = sns.color_palette("crest"), autopct='%1.1f%%', explode=None)
+    axs[0].set_title('Category 1 Distribution')
+    labels1 = ['Less than 8 hrs', '8 hrs', 'More than 8 hrs']
+    axs[0].legend(labels = labels1, loc="upper right")
+       
+    # Creating Pie Chart 2
+    
     valueCounts2 = df3.value_counts()
-    df3.value_counts().plot(kind='pie', subplots=True, figsize=(8, 8))
-    valueCounts2.plot.pie(autopct='%1.1f%%')
-    colors = sns.color_palette("crest")  # Define the color palette lines 61-62
-    valueCounts2.plot.pie(autopct='%1.1f%%',colors=colors) 
-    plt.title('Experiences bad Mental Health (Sometimes or Greater)')
-    plt.ylabel('')
+    axs[1].pie(valueCounts2, colors = sns.color_palette("crest"), autopct='%1.1f%%', explode=None)
+    axs[1].set_title('Experiences bad Mental Health (Sometimes or Greater)')
+    labels2 = ['Rarely or Never', 'Sometimes or Greater']
+    axs[1].legend(labels = labels2, loc="upper right")
+
+
     plt.show()
+
+def getMentalHealthPie():
+    print()
+
+    
+
     
 # def getBarChart():
 #     dfAltered = df.copy()
@@ -130,10 +139,10 @@ def getBarChart2():
     plt.title('Bad Mental Health by Sex (Sometimes or Greater)')
     plt.show()
     
-    # Print counts
-    grouped_counts = filteredDf['Sex'].value_counts()
-    print(grouped_counts)
-    print(minCount)
+    # # Print counts
+    # grouped_counts = filteredDf['Sex'].value_counts()
+    # print(grouped_counts)
+    # print(minCount)
     
 def getBarChart3():
     dfAltered = df.copy()
@@ -165,10 +174,10 @@ def getBarChart3():
     plt.title('Bad Mental Health by Sleep (Sometimes or Greater)')
     plt.show()
     
-    # Print counts
-    grouped_counts = filteredDf['Sleep Duration'].value_counts()
-    print(grouped_counts)
-    print(minCount)
+    # # Print counts
+    # grouped_counts = filteredDf['Sleep Duration'].value_counts()
+    # print(grouped_counts)
+    # print(minCount)
     
 def getHeatMap():
     df.rename(columns= {'q84':'Bad Mental Health', 'q85': 'Sleep Duration'}, inplace=True) 
@@ -178,14 +187,10 @@ def getHeatMap():
     # Note: Sex displays as negative correlation, could be reversed to positive, both are valid. Revisit later.
 #-------------- Stage 3 --------------
 #Prints input data of Stage 2 and displays needed charts 
-getSleepPie()
-getMentalHealthPie()
-# getBarChart()
+getPieCharts()
 getBarChart2()
 getBarChart3()
 getHeatMap()
-
-print(df)
 
 # # def getCorrel(file, var1, var2): # produces the correlation between data in two or more columns
 # #     df = pd.read_csv(file)
