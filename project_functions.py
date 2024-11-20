@@ -41,6 +41,8 @@ def getSleepPie():
     valueCounts1 = df2.value_counts()
     df2.value_counts().plot(kind='pie', subplots=True, figsize=(8, 8))
     valueCounts1.plot.pie(autopct='%1.1f%%')
+    colors = sns.color_palette("crest")  # Define the color palette lines 44-45
+    valueCounts1.plot.pie(autopct='%1.1f%%',colors=colors)
     plt.title('Category 1 Distribution')
     plt.ylabel('')
     plt.show()
@@ -56,6 +58,8 @@ def getMentalHealthPie():
     valueCounts2 = df3.value_counts()
     df3.value_counts().plot(kind='pie', subplots=True, figsize=(8, 8))
     valueCounts2.plot.pie(autopct='%1.1f%%')
+    colors = sns.color_palette("crest")  # Define the color palette lines 61-62
+    valueCounts2.plot.pie(autopct='%1.1f%%',colors=colors) 
     plt.title('Experiences bad Mental Health (Sometimes or Greater)')
     plt.ylabel('')
     plt.show()
@@ -119,8 +123,8 @@ def getBarChart2():
     # Grouping "Bad Mental Health" to "Grade" for plotting student responses from each grade level
     groupedData = filteredDf['Sex'].value_counts().reset_index(name='count').rename(columns={'index': 'Sex'})
     
-    # Plotting the data
-    sns.barplot(x='Sex', y='count', data=groupedData, order=['Female', 'Male'])
+    # Plotting the data, custom color palette (color added with 'palette' line 127)
+    sns.barplot(x='Sex', y='count', data=groupedData, order=['Female', 'Male'], palette="crest")
     plt.xlabel('Sex')
     plt.ylabel('Count of Students')
     plt.title('Bad Mental Health by Sex (Sometimes or Greater)')
@@ -155,7 +159,7 @@ def getBarChart3():
     groupedData = filteredDf['Sleep Duration'].value_counts().reset_index(name='count').rename(columns={'index': 'Sleep Duration'})
     
     # Plotting the data
-    sns.barplot(x='Sleep Duration', y='count', data=groupedData, order=['≤ 4 hrs', '5 hrs', '6 hrs', '7 hrs', '8 hrs', '9 hrs', '≥ 10 hrs'])
+    sns.barplot(x='Sleep Duration', y='count', data=groupedData, order=['≤ 4 hrs', '5 hrs', '6 hrs', '7 hrs', '8 hrs', '9 hrs', '≥ 10 hrs'], palette="crest")
     plt.xlabel('Hours of Sleep')
     plt.ylabel('Count of Students')
     plt.title('Bad Mental Health by Sleep (Sometimes or Greater)')
@@ -168,7 +172,7 @@ def getBarChart3():
     
 def getHeatMap():
     df.rename(columns= {'q84':'Bad Mental Health', 'q85': 'Sleep Duration'}, inplace=True) 
-    sns.heatmap(df.corr(numeric_only=True), cmap="YlGnBu", annot=True)
+    sns.heatmap(df.corr(numeric_only=True),  cmap="crest", annot=True)
     plt.show
     
     # Note: Sex displays as negative correlation, could be reversed to positive, both are valid. Revisit later.
