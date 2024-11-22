@@ -1,6 +1,9 @@
+import warnings
 import seaborn as sns
 import matplotlib.pyplot as plt
 import pandas as pd
+
+warnings.filterwarnings("ignore")
 
 #-------------- Stage 1 --------------
 # Opening and reading CSV data file
