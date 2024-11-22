@@ -188,7 +188,38 @@ def getHeatMap():
     plt.show
     
     # Note: Sex displays as negative correlation, could be reversed to positive, both are valid. Revisit later.
+
 #-------------- Stage 3 --------------
+#This is the start of our drop down menu 
+#-------------------------------------
+# # Task 2 'give user a informative statement.'    
+# print(f'Please enter a select data chart of your choice')
+# print('--------------------------------------------------')
+# print() #blank line 
+
+# # Task 4 Determine if the number provided by the user is prime
+# print("menu_options = ('0', '1', '2', '3')")
+
+# while True:
+#     userInput = int(input(f'Select 0-3 from the visual data list:\t'))
+    
+#     if userInput == 0:
+#         print('getPieCharts')
+#         break
+#     elif userInput == 1:
+#         print('getBarChart3')
+#         break
+#     elif userInput == 2:
+#         print('getHeatMap')
+#         break
+#     elif userInput == 3:
+#         print('getMentalHealthPie')
+#         break
+#     else:
+#         print(f'Invalid selection. Please select a number between 0 and 3')  
+        
+
+#-------------- Stage 4 --------------
 #Prints input data of Stage 2 and displays needed charts 
 getPieCharts()
 getBarChart2()
