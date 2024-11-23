@@ -134,48 +134,55 @@ def display():
 
     while True:
         userCheck = 'Y'
-        userInput = int(input('\nSelect 0-3 from the visual data list:\t'))
         
-        if userInput == 0:
-            getPieCharts()
+        try:
+            userInput = int(input('\nSelect 0-3 from the visual data list:\t'))
             
-            userCheck = input('\nWould you like to continue? (Y/N):\t').lower()
-            if userCheck == ('y'):
-                continue
+            if userInput == 0:
+                getPieCharts()
+                
+                userCheck = input('\nWould you like to continue? (Y/N):\t').lower()
+                if userCheck == ('y'):
+                    continue
+                else:
+                    break
+                
+                
+            elif userInput == 1:
+                getBarChart1()
+                
+                userCheck = input('Would you like to continue? (Y/N):\t').lower()
+                if userCheck == 'y':
+                    continue
+                else:
+                    break
+            
+            elif userInput == 2:
+                getBarChart2()
+                
+                userCheck = input('Would you like to continue? (Y/N):\t').lower()
+                if userCheck == 'y':
+                    continue
+                else:
+                    break
+                
+            elif userInput == 3:
+                getHeatMap()
+                
+                userCheck = input('Would you like to continue? (Y/N):\t').lower()
+                if userCheck == 'y':
+                    continue
+                else:
+                    break
             else:
-                break
-            
-            
-        elif userInput == 1:
-            getBarChart1()
-            
-            userCheck = input('Would you like to continue? (Y/N):\t').lower()
-            if userCheck == 'y':
-                continue
-            else:
-                break
+                print('Invalid selection. Please select a number between 0 and 3.') 
         
-        elif userInput == 2:
-            getBarChart2()
+        except ValueError:
+            print('Invalid value, please enter an integer.')
+            continue
             
-            userCheck = input('Would you like to continue? (Y/N):\t').lower()
-            if userCheck == 'y':
-                continue
-            else:
-                break
-            
-        elif userInput == 3:
-            getHeatMap()
-            
-            userCheck = input('Would you like to continue? (Y/N):\t').lower()
-            if userCheck == 'y':
-                continue
-            else:
-                break
-            
-        else:
-            print('Invalid selection. Please select a number between 0 and 3.') 
-    print('\nThank you for viewing this project.')
+    print('\nThank you for viewing this project.')    
+        
 
 #This is the start of our drop down menu 
 #-------------------------------------
