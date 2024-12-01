@@ -5,11 +5,11 @@ import pandas as pd
 
 
 # Ignore miscellaneous warnings during program execution
-warnings.filterwarnings("ignore")
+warnings.filterwarnings('ignore')
 
 
 #-------------- Stage 1 --------------
-# Opening and reading the CSV data file
+# Opening and reading the .csv excel data file
 inputFile = open('B104_Data_Sheet_v2.csv')
 df = pd.read_csv('B104_Data_Sheet_v2.csv')
 
@@ -29,8 +29,8 @@ def getPieCharts():
     dfAltered = df.copy()
     dfAltered['Sleep Dur.'].replace([1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0], ['≤ 4 hrs', '5 hrs', '6 hrs', '7 hrs', '8 hrs', '9 hrs', '≥ 10 hrs'], inplace = True)
     dfSnippet = dfAltered['Sleep Dur.']
-    dfSnippet = dfSnippet.replace(['≤ 4 hrs', '5 hrs', '6 hrs', '7 hrs'],"Less than 8 hrs")
-    dfSnippet = dfSnippet.replace(['9 hrs', '≥ 10 hrs'],"More than 8 hrs")
+    dfSnippet = dfSnippet.replace(['≤ 4 hrs', '5 hrs', '6 hrs', '7 hrs'],'Less than 8 hrs')
+    dfSnippet = dfSnippet.replace(['9 hrs', '≥ 10 hrs'],'More than 8 hrs')
     
             # 2nd pie chart snippet
     dfAltered['Poor MH'].replace([1.0, 2.0, 3.0, 4.0, 5.0], ['Never', 'Rarely', 'Sometimes', 'Mostly', 'Always'], inplace = True)
@@ -46,17 +46,17 @@ def getPieCharts():
         # Displaying each pie chart on figure
             # 1st pie chart display
     valueCounts1 = dfSnippet.value_counts()
-    axs[0].pie(valueCounts1, colors = sns.color_palette("crest"), autopct='%1.1f%%', explode=None)
+    axs[0].pie(valueCounts1, colors = sns.color_palette('crest'), autopct='%1.1f%%', explode=None)
     axs[0].set_title('Sleep Duration: Less, Equal, or More than 8 Hours')
     labels1 = ['Less than 8 hrs', '8 hrs', 'More than 8 hrs']
-    axs[0].legend(labels = labels1, loc="upper left")
+    axs[0].legend(labels = labels1, loc='upper left')
        
             # 2nd pie chart display
     valueCounts2 = dfSnippet2.value_counts()
-    axs[1].pie(valueCounts2, colors = sns.color_palette("crest"), autopct='%1.1f%%', explode=None)
+    axs[1].pie(valueCounts2, colors = sns.color_palette('crest'), autopct='%1.1f%%', explode=None)
     axs[1].set_title('Frequency of Bad Mental Health: Common vs. Rare')
     labels2 = ['Sometimes, Mostly, & Always', 'Rarely & Never']
-    axs[1].legend(labels = labels2, loc="upper left")
+    axs[1].legend(labels = labels2, loc='upper left')
 
 
         # Display figure when function is called
@@ -94,20 +94,19 @@ def getBarChartDuo():
     
         # Displaying each pie chart on figure
             # 1st bar chart display
-    sns.barplot(x='Sex', y='count', data=groupedData, ax=axs[0], palette="crest")
+    sns.barplot(x='Sex', y='count', data=groupedData, ax=axs[0], palette='crest')
     axs[0].set_title('Reports of Bad Mental Health by Sex')
     axs[0].set_xlabel('Sex')
     axs[0].set_ylabel('Count of Students')
     
             # 2nd pie chart display
-    sns.barplot(x='Sleep Dur.', y='count', hue='Sex', data=sleepGroupedData, ax=axs[1], palette="crest")
+    sns.barplot(x='Sleep Dur.', y='count', hue='Sex', data=sleepGroupedData, ax=axs[1], palette='crest')
     axs[1].set_title('Sleep Duration by Sex')
     axs[1].set_xlabel('Sleep Duration')
     axs[1].set_ylabel('Count of Students')
     
     
         # Display figure when function is called
-    plt.tight_layout()
     plt.show()
     
     
@@ -129,7 +128,7 @@ def getBarChartSolo():
     
     
         # Displaying the bar chart
-    sns.barplot(x='Sleep Dur.', y='count', data=groupedData, order=['≤ 4 hrs', '5 hrs', '6 hrs', '7 hrs', '8 hrs', '9 hrs', '≥ 10 hrs'], palette="crest")
+    sns.barplot(x='Sleep Dur.', y='count', data=groupedData, order=['≤ 4 hrs', '5 hrs', '6 hrs', '7 hrs', '8 hrs', '9 hrs', '≥ 10 hrs'], palette='crest')
     plt.xlabel('Hours of Sleep')
     plt.ylabel('Count of Students')
     plt.title('Reports of Bad Mental Health by Hours of Sleep')
@@ -146,7 +145,7 @@ def getHeatMap():
     
     
         # Display heatmap
-    sns.heatmap(df.corr(numeric_only=True),  cmap="crest", annot=True)
+    sns.heatmap(df.corr(numeric_only=True),  cmap='crest', annot=True)
     
     
         # Display figure when function is called
@@ -166,7 +165,7 @@ def display():
         userCheck = 'Y'
         breaker = False
         
-        # Implementing "try" function to test for exception error
+        # Implementing 'try' function to test for exception error
         try:
             userInput = int(input('\nSelect 0-3 from the visual data list:\t'))
             
@@ -205,7 +204,7 @@ def display():
         
     
     print('\n\nThank you for viewing this project.')    
-        
+
 
 # Executing display function below 
 #-------------------------------------
