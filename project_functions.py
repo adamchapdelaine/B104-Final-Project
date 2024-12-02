@@ -81,7 +81,7 @@ def getBarChartDuo():
     groupedData = filteredDf['Sex'].value_counts().reset_index(name='count').rename(columns={'index': 'Sex'})
     
             # 2nd bar chart snippet
-    dfAltered['Sleep Dur.'].replace([1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0], ['≤ 4 hrs', '5 hrs', '6 hrs', '7 hrs', '8 hrs', '9 hrs', '≥ 10 hrs'], inplace=True)
+    dfAltered['Sleep Dur.'].replace([1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0], ['≤4 hrs', '5 hrs', '6 hrs', '7 hrs', '8 hrs', '9 hrs', '≥10 hrs'], inplace=True)
     dfSnippet2 = dfAltered[['Poor MH', 'Sex', 'Sleep Dur.']]
     dfSnippet2 = dfSnippet2.replace(['Sometimes', 'Mostly', 'Always'], 'Experiences bad mental health')
                 # Grouping the data by sleep duration and sex
@@ -89,7 +89,7 @@ def getBarChartDuo():
     
     
         # Establishing chart figure containing two subplots 
-    fig, axs = plt.subplots(1, 2, figsize=(12, 9))
+    fig, axs = plt.subplots(1, 2, figsize=(12, 6))
       
     
         # Displaying each pie chart on figure
