@@ -84,21 +84,22 @@ def getBarChartSolo():
     dfAltered = df.copy()
     dfAltered['Poor MH'].replace([1.0, 2.0, 3.0, 4.0, 5.0], ['Never', 'Rarely', 'Sometimes', 'Mostly', 'Always'], inplace = True)
     dfAltered['Sleep Dur.'].replace([1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0], ['≤ 4 hrs', '5 hrs', '6 hrs', '7 hrs', '8 hrs', '9 hrs', '≥ 10 hrs'], inplace = True)
-    dfSnippet = dfAltered[['Poor MH', 'Sleep Dur.']]
+    dfAltered['Sex'].replace([1.0, 2.0], ['Female', 'Male'], inplace=True)
+    dfSnippet = dfAltered[['Poor MH', 'Sleep Dur.', 'Sex']]
     dfSnippet = dfSnippet.replace(['Sometimes', 'Mostly', 'Always'],'Experiences bad mental health')
-            # Establish proportional sample as males outnumber females in the original sample
+            # Establish proportional sample of students in each category of sleep duration
     minCount = dfSnippet['Sleep Dur.'].value_counts().min()
     balancedSample = dfSnippet.groupby('Sleep Dur.').apply(lambda x: x.sample(minCount, random_state=42)).reset_index(drop=True)
             # Filter data selection for bad mental health experiences
     filteredDf = balancedSample[balancedSample['Poor MH'] == 'Experiences bad mental health']
             # Count how many students reported bad mental health experiences for each category of sleep duration
-    groupedData = filteredDf['Sleep Dur.'].value_counts().reset_index(name='count').rename(columns={'index': 'Sleep Dur.'})
+    groupedData = filteredDf.groupby(['Sleep Dur.', 'Sex']).size().reset_index(name='count')
     
         # Establishing chart figure containing one subplot
     fig, axs = plt.subplots(figsize=None)
     
         # Displaying the bar chart
-    sns.barplot(x='Sleep Dur.', y='count', data=groupedData, order=['≤ 4 hrs', '5 hrs', '6 hrs', '7 hrs', '8 hrs', '9 hrs', '≥ 10 hrs'], palette='crest')
+    sns.barplot(x='Sleep Dur.', y='count', hue='Sex', data=groupedData, order=['≤ 4 hrs', '5 hrs', '6 hrs', '7 hrs', '8 hrs', '9 hrs', '≥ 10 hrs'], palette='crest')
     plt.xlabel('Hours of Sleep')
     plt.ylabel('Count of Students')
     plt.title('Reports of Bad Mental Health by Hours of Sleep')
@@ -130,7 +131,7 @@ def getBarChartDuo():
     dfSnippet2 = dfAltered[['Poor MH', 'Sex', 'Sleep Dur.']]
     dfSnippet2 = dfSnippet2.replace(['Sometimes', 'Mostly', 'Always'], 'Experiences bad mental health')
                 # Grouping the data by sleep duration and sex
-    sleepGroupedData = dfAltered.groupby(['Sleep Dur.', 'Sex']).size().reset_index(name='count')
+    sleepGroupedData = dfSnippet2.groupby(['Sleep Dur.', 'Sex']).size().reset_index(name='count')
     
     
         # Establishing chart figure containing two subplots 
