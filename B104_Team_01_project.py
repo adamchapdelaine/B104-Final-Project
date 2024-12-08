@@ -1,18 +1,21 @@
-## Developers:          Chapdelaine, Adam & Johnson, Shawn
-## Course:              B104
+## Developers:          Chapdelaine, Adam / Johnson, Shawn
+## Course:              CSCI/ISAT - B104
 ## Project:             B104 Final Project
 ## Team Name:           Team Lunchbox
+## Team Number:         01
 
 
+# Core Imported Libraries
 import warnings
 import seaborn as sns
 import matplotlib.pyplot as plt
 import pandas as pd
+# Optional GUI Libraries
 import ctypes
 import tkinter as tk
 from tkinter import ttk
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-# Third-Party (Open Source) Tkinter Theme Package
+    # Third-Party (Open Source) Tkinter Theme Package
 import sv_ttk
 
 
